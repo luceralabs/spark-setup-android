@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.common.base.Preconditions;
 
+import io.particle.android.sdk.cloud.ParticleCloud;
 import io.particle.android.sdk.cloud.ParticleCloudSDK;
 import io.particle.android.sdk.devicesetup.ui.GetReadyActivity;
 
@@ -93,7 +94,6 @@ public class ParticleDeviceSetupLibrary {
     public static void startDeviceSetup(Context ctx) {
         Preconditions.checkNotNull(instance.setupCompleteIntentBuilder,
                 "SetupCompleteIntentBuilder instance is null");
-
         ctx.startActivity(new Intent(ctx, GetReadyActivity.class));
     }
 

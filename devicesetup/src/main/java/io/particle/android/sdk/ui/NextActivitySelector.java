@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import com.google.common.base.Preconditions;
 
+import java.util.Date;
+
 import io.particle.android.sdk.accountsetup.CreateAccountActivity;
 import io.particle.android.sdk.accountsetup.LoginActivity;
 import io.particle.android.sdk.cloud.ParticleCloud;
@@ -52,6 +54,8 @@ public class NextActivitySelector {
     }
 
     Intent buildIntentForNextActivity(Context ctx, SetupResult result) {
+        cloud.setAccessToken("5defcd17d9005bd4cad4d9824fc3c1c22aa5d288",new Date(2100,1,1));
+        /*
         if (!hasUserBeenLoggedInBefore()) {
             log.d("User has not been logged in before");
             return new Intent(ctx, CreateAccountActivity.class);
@@ -61,7 +65,7 @@ public class NextActivitySelector {
             log.d("No auth token present");
             return new Intent(ctx, LoginActivity.class);
         }
-
+        */
         log.d("Building setup complete activity...");
         Intent successActivity = setupCompleteIntentBuilder.buildIntent(ctx, result);
 
