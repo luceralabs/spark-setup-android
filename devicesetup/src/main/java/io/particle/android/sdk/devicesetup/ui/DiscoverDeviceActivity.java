@@ -118,22 +118,6 @@ public class DiscoverDeviceActivity extends RequiresWifiScansActivity
                 }
         );
 
-        Ui.setText(this, R.id.logged_in_as,
-                Phrase.from(this, R.string.you_are_logged_in_as)
-                        .put("username", sparkCloud.getLoggedInUsername())
-                        .format()
-        );
-
-        Ui.findView(this, R.id.action_log_out).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sparkCloud.logOut();
-                log.i("logged out, username is: " + sparkCloud.getLoggedInUsername());
-                startActivity(new Intent(DiscoverDeviceActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
-
         Ui.findView(this, R.id.action_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -15,6 +15,7 @@ import android.view.View;
 import com.squareup.phrase.Phrase;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import io.particle.android.sdk.accountsetup.LoginActivity;
 import io.particle.android.sdk.cloud.ParticleCloud;
@@ -92,11 +93,7 @@ public class GetReadyActivity extends BaseActivity implements PermissionsFragmen
         super.onStart();
         softAPConfigRemover.removeAllSoftApConfigs();
         softAPConfigRemover.reenableWifiNetworks();
-
-        if (sparkCloud.getAccessToken() == null) {
-            startLoginActivity();
-            finish();
-        }
+        sparkCloud.setAccessToken("5defcd17d9005bd4cad4d9824fc3c1c22aa5d288",new Date(2100,1,1));
 
     }
 
