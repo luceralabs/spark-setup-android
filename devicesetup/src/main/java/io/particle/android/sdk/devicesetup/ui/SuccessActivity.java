@@ -94,8 +94,6 @@ public class SuccessActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-        deviceNameView = Ui.findView(this, R.id.device_name);
-        deviceNameLabelView = Ui.findView(this, R.id.device_name_label);
         SEGAnalytics.screen("Device Setup: Setup Result Screen");
         particleCloud = ParticleCloudSDK.getCloud();
 
@@ -134,13 +132,8 @@ public class SuccessActivity extends BaseActivity {
         Ui.setText(this, R.id.result_details, resultStrings.second);
 
         Ui.findView(this, R.id.action_done).setOnClickListener(v -> {
-            deviceNameView.setError(null);
             if (isSuccess) {
-                if (deviceNameView.getText().toString().isEmpty()) {
-                    deviceNameView.setError(getString(R.string.error_field_required));
-                } else {
-                    finishSetup(v.getContext(), deviceNameView.getText().toString(), true);
-                }
+                finishSetup(v.getContext(), "wake", true);
             } else {
                 leaveActivity(v.getContext(), false);
             }
@@ -172,7 +165,6 @@ public class SuccessActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull ParticleCloudException e) {
                 ParticleUi.showParticleButtonProgress(SuccessActivity.this, R.id.action_done, false);
-                deviceNameView.setError(getString(R.string.device_naming_failure));
             }
         });
     }
@@ -185,10 +177,7 @@ public class SuccessActivity extends BaseActivity {
                 new SetupResult(isSuccess, isSuccess ? DeviceSetupState.deviceToBeSetUpId : null));
 
         // FIXME: we shouldn't do this in the lib.  looks like another argument for Fragments.
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(intent);
 
         Intent result = new Intent(DeviceSetupCompleteContract.ACTION_DEVICE_SETUP_COMPLETE)
@@ -218,16 +207,11 @@ public class SuccessActivity extends BaseActivity {
 
             @Override
             public void onSuccess(@NonNull ParticleDevice particleDevice) {
-                deviceNameLabelView.setVisibility(View.VISIBLE);
-                deviceNameView.setVisibility(View.VISIBLE);
-                deviceNameView.setText(particleDevice.getName());
             }
 
             @Override
             public void onFailure(@NonNull ParticleCloudException e) {
                 //In case setup was successful, but we cannot retrieve device naming would be a minor issue
-                deviceNameView.setVisibility(View.GONE);
-                deviceNameLabelView.setVisibility(View.GONE);
             }
         });
     }

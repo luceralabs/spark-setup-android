@@ -112,23 +112,6 @@ public class DiscoverDeviceActivity extends RequiresWifiScansActivity
                 }
         );
 
-        if (!truthy(sparkCloud.getLoggedInUsername())) {
-            Ui.findView(this, R.id.logged_in_as).setVisibility(View.GONE);
-        } else {
-            Ui.setText(this, R.id.logged_in_as,
-                    Phrase.from(this, R.string.you_are_logged_in_as)
-                            .put("username", sparkCloud.getLoggedInUsername())
-                            .format()
-            );
-        }
-
-        Ui.findView(this, R.id.action_log_out).setOnClickListener(view -> {
-            sparkCloud.logOut();
-            log.i("logged out, username is: " + sparkCloud.getLoggedInUsername());
-            startActivity(new Intent(DiscoverDeviceActivity.this, LoginActivity.class));
-            finish();
-        });
-
         Ui.findView(this, R.id.action_cancel).setOnClickListener(view -> finish());
     }
 
